@@ -77,6 +77,7 @@ namespace Sunyunie.FFMPEGNyaa
         [SerializeField] private bool isPixelFormatReady = false;   // 비디오 픽셀 포맷이 설정되었는지 확인용
 
         [SerializeField] private bool isProcessing = false; // 현재 FFMPEG 작업이 진행 중인지 확인용
+        [SerializeField] private bool isOpenFolderWhenDone = false; // 작업 완료 후 출력 폴더를 열지 여부
 
         [Header("유저 데이터")]
         [SerializeField] private UserSetting userSetting;
@@ -626,7 +627,21 @@ namespace Sunyunie.FFMPEGNyaa
                 _ => 0
             };
 
+            isOpenFolderWhenDone = userSetting.isOpenFolderWhenDone;
+
             CheckAllErrors();
+        }
+
+        public void Button_OpenOutputLocation()
+        {
+            if (!isOutputPathReady)
+            {
+                UnityEngine.Debug.LogWarning("출력 경로가 설정되지 않았다냥~");
+                return;
+            }
+
+            // 출력 경로 열기
+            System.Diagnostics.Process.Start("explorer.exe", userSetting.outputLocation);
         }
 
         public void InputField_FFMPEG_Changed()
@@ -760,6 +775,12 @@ namespace Sunyunie.FFMPEGNyaa
 
             CheckAllErrors();
         }
+
+        public void Toggle_OpenFolderWhenDone(bool _isOn)
+        {
+            isOpenFolderWhenDone                = _isOn;
+            userSetting.isOpenFolderWhenDone    = _isOn;
+        }
     }
 
     /// <summary>
@@ -783,6 +804,8 @@ namespace Sunyunie.FFMPEGNyaa
         public FFMPEGCodecs codec;              // 비디오 코덱
         public FFMPEGSpeed speed;               // 비디오 인코딩 속도
         public FFMPEGPixelFormat pixelFormat;   // 비디오 픽셀 포맷
+
+        public bool isOpenFolderWhenDone; // 작업 완료 후 출력 폴더를 열지 여부
     }
 
     /// <summary>
