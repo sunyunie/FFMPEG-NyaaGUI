@@ -1474,6 +1474,7 @@ MonoBehaviour:
   inputLocationIcon: {fileID: 2011910773}
   inputFileNameIcon: {fileID: 457257372}
   outputLocationIcon: {fileID: 539707262}
+  forgroundObject: {fileID: 1771903698}
   isFFMPEGPathReady: 0
   isInputPathReady: 0
   isOutputPathReady: 0
@@ -1486,6 +1487,7 @@ MonoBehaviour:
   isSpeedReady: 0
   isPixelFormatReady: 0
   isProcessing: 0
+  isOpenFolderWhenDone: 0
   userSetting:
     ffmpegPath: 
     inputLocation: 
@@ -1498,6 +1500,7 @@ MonoBehaviour:
     codec: 0
     speed: 0
     pixelFormat: 0
+    isOpenFolderWhenDone: 0
 --- !u!1 &179424399
 GameObject:
   m_ObjectHideFlags: 0
@@ -5476,7 +5479,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.39215687}
+  m_Color: {r: 0, g: 0, b: 0, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6780,7 +6783,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC2E4\uD589!"
+  m_text: "\uC2E4\uD589! ( \u2022\u0300\u03C9\u2022\u0301 )"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f83c2b43dbfa6e844a5bc02d00403b48, type: 2}
   m_sharedMaterial: {fileID: 3866695626762667292, guid: f83c2b43dbfa6e844a5bc02d00403b48, type: 2}

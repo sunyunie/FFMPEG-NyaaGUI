@@ -60,6 +60,9 @@ namespace Sunyunie.FFMPEGNyaa
         [SerializeField] private Image inputFileNameIcon;       // 입력 비디오 파일 이름(형식) 입력 필드의 아이콘
         [SerializeField] private Image outputLocationIcon;      // 출력 비디오 파일 경로 입력 필드의 아이콘
 
+        [Header("앞배경 오브젝트")]
+        [SerializeField] private GameObject forgroundObject; // UI 앞배경 오브젝트
+
         [Header("현 상태 추적 (ReadOnly)")]
         [SerializeField] private bool isFFMPEGPathReady = false;    // FFMPEG 경로가 설정되었는지 확인용
         [SerializeField] private bool isInputPathReady = false;     // 입력 소스 경로가 설정되었는지 확인용
@@ -85,6 +88,25 @@ namespace Sunyunie.FFMPEGNyaa
         private void Start()
         {
             CheckAllErrors();
+        }
+
+        private void FixedUpdate()
+        {
+            if (!isProcessing && forgroundObject.activeSelf) // FFMPEG 작업이 진행 중이지 않고 UI 앞배경이 활성화되어 있다면
+            {
+                OnProcessEnded(); // 작업 완료 후 처리
+            }
+        }
+
+        private void OnProcessEnded()
+        {
+            forgroundObject.SetActive(false); // UI 앞배경 비활성화
+
+            if (isOpenFolderWhenDone)
+            {
+                UnityEngine.Debug.Log("작업 완료 후 출력 폴더를 연다냥~");
+                System.Diagnostics.Process.Start("explorer.exe", userSetting.outputLocation);
+            }
         }
 
         private bool IsStringHasError(string _value, bool _isOnlyNumber) // 문자열에 오류가 있는지 확인용
@@ -465,6 +487,8 @@ namespace Sunyunie.FFMPEGNyaa
             }
 
             isProcessing = true; // FFMPEG 작업 시작
+
+            forgroundObject.SetActive(true); // UI 앞배경 활성화
 
             string codec = userSetting.codec.ToString().ToLower();
 
