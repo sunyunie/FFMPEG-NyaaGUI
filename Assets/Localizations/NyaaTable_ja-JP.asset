@@ -24,11 +24,11 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 4906633977856
-    m_Localized: "\u4FDD\u5B58\u306B\u3083\u301C\uFF01(=\uFF9F\u03C9\uFF9F)\uFF89"
+    m_Localized: "\u4FDD\u5B58\u306B\u3083\u301C\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 5001941147648
-    m_Localized: "\u8AAD\u307F\u8FBC\u307F\u306B\u3083\u301C\uFF01(\u0E05^\u2022\u03C9\u2022^\u0E05)"
+    m_Localized: "\u8AAD\u307F\u8FBC\u307F\u306B\u3083\u301C\uFF01"
     m_Metadata:
       m_Items: []
   - m_Id: 5048544059392
