@@ -1,5 +1,7 @@
 using SFB;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Sunyunie.FFMPEGNyaa
 {
@@ -8,6 +10,34 @@ namespace Sunyunie.FFMPEGNyaa
     /// </summary>
     public class FFMPEGNyaa : MonoBehaviour
     {
+        [Header("색상")]
+        [SerializeField] private Color errorColor = Color.red; // 오류 발생 시 배경색
+        [SerializeField] private Color normalColor = Color.green; // 정상 상태일 때 배경색
+
+        [SerializeField] private TextMeshProUGUI ffmpegPathText; // FFMPEG 실행파일 경로를 표시할 텍스트
+        [SerializeField] private TextMeshProUGUI inputLocationText; // 입력 비디오 파일 경로를 표시할 텍스트
+        [SerializeField] private TextMeshProUGUI inputFileNameText; // 입력 비디오 파일 이름(형식)을 표시할 텍스트
+        [SerializeField] private TextMeshProUGUI outputLocationText; // 출력 비디오 파일 경로를 표시할 텍스트
+
+        [SerializeField] private TextMeshProUGUI widthText; // 비디오 너비를 표시할 텍스트
+        [SerializeField] private TextMeshProUGUI heightText; // 비디오 높이를
+        [SerializeField] private TextMeshProUGUI framerateText; // 비디오 프레임 레이트를 표시할 텍스트
+
+        [SerializeField] private TextMeshProUGUI outputFileNameText; // 출력 비디오 파일 이름을 표시할 텍스트
+
+        [SerializeField] private Image ffmpegPathBackgroundImage; // FFMPEG 실행파일 경로 입력 필드의 배경 이미지
+        [SerializeField] private Image inputLocationBackgroundImage; // 입력 비디오 파일 경로 입력 필드의 배경 이미지
+        [SerializeField] private Image inputFileNameBackgroundImage; // 입력 비디오 파일 이름(형식) 입력 필드의 배경 이미지
+        [SerializeField] private Image outputLocationBackgroundImage; // 출력 비디오 파일 경로 입력 필드의 배경 이미지
+
+        [SerializeField] private Image widthBackgroundImage; // 비디오 너비 입력 필드의 배경 이미지
+        [SerializeField] private Image heightBackgroundImage; // 비디오 높이 입력 필드의 배경 이미지
+        [SerializeField] private Image framerateBackgroundImage; // 비디오 프레임 레이트 입력 필드의 배경 이미지
+        [SerializeField] private Image codecBackgroundImage; // 비디오 코덱 선택 필드의 배경 이미지
+        [SerializeField] private Image speedBackgroundImage; // 비디오 인코딩 속도 선택 필드의 배경 이미지
+
+        [SerializeField] private Image outputFileNameBackgroundImage; // 출력 비디오 파일 이름 입력 필드의 배경 이미지
+
         [SerializeField] private UserSetting userSetting;
 
         private bool isFFMPEGPathReady = false; // FFMPEG 경로가 설정되었는지 확인용
@@ -23,6 +53,11 @@ namespace Sunyunie.FFMPEGNyaa
 
         private bool isCodecReady = false; // 비디오 코덱이 설정되었는지 확인용
         private bool isSpeedReady = false; // 비디오 인코딩 속도가 설정되었는지 확인용
+
+        private void Start()
+        {
+            CheckAllErrors();
+        }
 
         private bool IsStringHasError(string _value, bool _isOnlyNumber) // 문자열에 오류가 있는지 확인용
         {
@@ -61,6 +96,101 @@ namespace Sunyunie.FFMPEGNyaa
             isWidthReady = IsStringHasError(userSetting.width, true);
             isHeightReady = IsStringHasError(userSetting.height, true);
             isFramerateReady = IsStringHasError(userSetting.framerate, true);
+
+            UpdateUI();
+        }
+
+        private void UpdateUI()
+        {
+            if (isFFMPEGPathReady)
+            {
+                ffmpegPathBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                ffmpegPathBackgroundImage.color = errorColor;
+            }
+
+            if (isInputPathReady)
+            {
+                inputLocationBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                inputLocationBackgroundImage.color = errorColor;
+            }
+
+            if (isOutputPathReady)
+            {
+                outputLocationBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                outputLocationBackgroundImage.color = errorColor;
+            }
+
+            if (isInputFileNameReady)
+            {
+                inputFileNameBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                inputFileNameBackgroundImage.color = errorColor;
+            }
+
+            if (isOutputFileNameReady)
+            {
+                outputFileNameBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                outputFileNameBackgroundImage.color = errorColor;
+            }
+
+            if (isWidthReady)
+            {
+                widthBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                widthBackgroundImage.color = errorColor;
+            }
+
+            if (isHeightReady)
+            {
+                heightBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                heightBackgroundImage.color = errorColor;
+            }
+
+            if (isFramerateReady)
+            {
+                framerateBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                framerateBackgroundImage.color = errorColor;
+            }
+
+            if (isCodecReady)
+            {
+                codecBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                codecBackgroundImage.color = errorColor;
+            }
+
+            if (isSpeedReady)
+            {
+                speedBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                speedBackgroundImage.color = errorColor;
+            }
         }
 
         public void Button_FFMPEG_FindPath()
@@ -75,6 +205,8 @@ namespace Sunyunie.FFMPEGNyaa
             {
                 Debug.LogWarning("FFmpeg 실행파일을 찾지 못했다냥~");
             }
+
+            CheckAllErrors();
         }
 
         public void Button_InputLocation_FindPath()
@@ -89,16 +221,78 @@ namespace Sunyunie.FFMPEGNyaa
             {
                 Debug.LogWarning("입력 비디오 파일의 경로를 찾지 못했다냥~");
             }
+
+            CheckAllErrors();
         }
 
-        public void InputField_FFMPEG_Changed(string _value)
+        public void InputField_FFMPEG_Changed()
         {
-            userSetting.ffmpegPath = _value;
+            userSetting.ffmpegPath = ffmpegPathText.text;
 
-            if (string.IsNullOrEmpty(userSetting.ffmpegPath))
-            {
-                Debug.LogWarning("FFmpeg 실행파일 경로가 비어있다냥~");
-            }
+            CheckAllErrors();
+        }
+
+        public void InputField_InputLocation_Changed()
+        {
+            userSetting.inputLocation = inputLocationText.text;
+
+            CheckAllErrors();
+        }
+
+        public void InputField_InputFileName_Changed()
+        {
+            userSetting.inputFileName = inputFileNameText.text;
+
+            CheckAllErrors();
+        }
+
+        public void InputField_OutputLocation_Changed()
+        {
+            userSetting.outputLocation = outputLocationText.text;
+
+            CheckAllErrors();
+        }
+
+        public void InputField_Width_Changed()
+        {
+            userSetting.width = widthText.text;
+
+            CheckAllErrors();
+        }
+
+        public void InputField_Height_Changed()
+        {
+            userSetting.height = heightText.text;
+
+            CheckAllErrors();
+        }
+
+        public void InputField_Framerate_Changed()
+        {
+            userSetting.framerate = framerateText.text;
+
+            CheckAllErrors();
+        }
+
+        public void Dropdown_Codec_Changed()
+        {
+            isCodecReady = true;
+
+            CheckAllErrors();
+        }
+
+        public void Dropdown_Speed_Changed()
+        {
+            isSpeedReady = true;
+
+            CheckAllErrors();
+        }
+
+        public void InputField_OutputFileName_Changed()
+        {
+            userSetting.outputFileName = outputFileNameText.text;
+
+            CheckAllErrors();
         }
     }
 
