@@ -49,6 +49,20 @@ namespace Sunyunie.FFMPEGNyaa
             return true;
         }
 
+        private void CheckAllErrors()
+        {
+            isFFMPEGPathReady = IsStringHasError(userSetting.ffmpegPath, false);
+            isInputPathReady = IsStringHasError(userSetting.inputLocation, false);
+            isOutputPathReady = IsStringHasError(userSetting.outputLocation, false);
+
+            isInputFileNameReady = IsStringHasError(userSetting.inputFileName, false);
+            isOutputFileNameReady = IsStringHasError(userSetting.outputFileName, false);
+
+            isWidthReady = IsStringHasError(userSetting.width, true);
+            isHeightReady = IsStringHasError(userSetting.height, true);
+            isFramerateReady = IsStringHasError(userSetting.framerate, true);
+        }
+
         public void Button_FFMPEG_FindPath()
         {
             var paths = StandaloneFileBrowser.OpenFilePanel("FFmpeg 실행파일을 골라줘냥~", "", "exe", false);
