@@ -3,6 +3,7 @@ using TMPro;
 using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Text.RegularExpressions;
 
 namespace Sunyunie.FFMPEGNyaa
 {
@@ -385,16 +386,41 @@ namespace Sunyunie.FFMPEGNyaa
 
             var paths = StandaloneFileBrowser.OpenFilePanel("입력 이미지 파일의 첫 프레임을 골라달라냥~", userSetting.inputLocation, extensions, false);
 
-
             if (paths.Length > 0)
             {
-                userSetting.inputFileName = paths[0];
+                string fullPath = paths[0];
+                string fileName = System.IO.Path.GetFileName(fullPath);
 
-                inputFileNameText.text = userSetting.inputFileName;
+                // 확장자 분리
+                string extension = System.IO.Path.GetExtension(fileName);
+                string nameWithoutExtension = System.IO.Path.GetFileNameWithoutExtension(fileName);
+
+                // 뒤쪽의 연속된 숫자 찾기 (예: 0000, 00123, 42 등)
+                Match match = Regex.Match(nameWithoutExtension, @"^(.*?)(\d+)$");
+                if (match.Success)
+                {
+                    string prefix = match.Groups[1].Value;
+                    string number = match.Groups[2].Value;
+                    int digitCount = number.Length;
+
+                    // 포맷팅: %04d, %05d 등
+                    string pattern = $"{prefix}%0{digitCount}d{extension}";
+
+                    userSetting.inputFileName = pattern;
+                    inputFileNameText.text = pattern;
+                }
+                else
+                {
+                    // 숫자가 없으면 그냥 이름 그대로 표시
+                    userSetting.inputFileName = fileName;
+                    inputFileNameText.text = fileName;
+
+                    UnityEngine.Debug.LogWarning("프레임 넘버 형식을 감지하지 못했으니 자동 치환 안 했댕...냥냥펀치! (งΦㅅΦ)ง");
+                }
             }
             else
             {
-                UnityEngine.Debug.LogWarning("입력 비디오 파일의 이름(형식)을 찾지 못했다냥~");
+                UnityEngine.Debug.LogWarning("입력 이미지 파일을 선택하지 않았댕~");
             }
 
             CheckAllErrors();
