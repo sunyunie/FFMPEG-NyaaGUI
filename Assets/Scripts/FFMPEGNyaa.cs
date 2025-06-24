@@ -1,6 +1,7 @@
 using SFB;
 using TMPro;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,65 +13,70 @@ namespace Sunyunie.FFMPEGNyaa
     public class FFMPEGNyaa : MonoBehaviour
     {
         [Header("색상")]
-        [SerializeField] private Color errorColor = Color.red; // 오류 발생 시 배경색
-        [SerializeField] private Color normalColor = Color.green; // 정상 상태일 때 배경색
+        [SerializeField] private Color errorColor = Color.red;      // 오류 발생 시 배경색
+        [SerializeField] private Color normalColor = Color.green;   // 정상 상태일 때 배경색
 
         [Header("이미지")]
         [SerializeField] private Sprite badIcon;
         [SerializeField] private Sprite goodIcon;
 
         [Header("인풋필드")]
-        [SerializeField] private TMP_InputField ffmpegPathText; // FFMPEG 실행파일 경로를 표시할 텍스트
-        [SerializeField] private TMP_InputField inputLocationText; // 입력 비디오 파일 경로를 표시할 텍스트
-        [SerializeField] private TMP_InputField inputFileNameText; // 입력 비디오 파일 이름(형식)을 표시할 텍스트
-        [SerializeField] private TMP_InputField outputLocationText; // 출력 비디오 파일 경로를 표시할 텍스트
+        [SerializeField] private TMP_InputField ffmpegPathText;         // FFMPEG 실행파일 경로를 표시할 텍스트
+        [SerializeField] private TMP_InputField inputLocationText;      // 입력 비디오 파일 경로를 표시할 텍스트
+        [SerializeField] private TMP_InputField inputFileNameText;      // 입력 비디오 파일 이름(형식)을 표시할 텍스트
+        [SerializeField] private TMP_InputField outputLocationText;     // 출력 비디오 파일 경로를 표시할 텍스트
 
-        [SerializeField] private TMP_InputField widthText; // 비디오 너비를 표시할 텍스트
-        [SerializeField] private TMP_InputField heightText; // 비디오 높이를
-        [SerializeField] private TMP_InputField framerateText; // 비디오 프레임 레이트를 표시할 텍스트
+        [SerializeField] private TMP_InputField widthText;          // 비디오 너비를 표시할 텍스트
+        [SerializeField] private TMP_InputField heightText;         // 비디오 높이를
+        [SerializeField] private TMP_InputField framerateText;      // 비디오 프레임 레이트를 표시할 텍스트
 
         [SerializeField] private TMP_InputField outputFileNameText; // 출력 비디오 파일 이름을 표시할 텍스트
 
         [SerializeField] private TMP_InputField commandPreviewTest; // FFMPEG 명령어 미리보기를 표시할 텍스트
 
         [Header("드롭다운")]
-        [SerializeField] private TMP_Dropdown codecDropdown; // 비디오 코덱 선택 드롭다운
-        [SerializeField] private TMP_Dropdown speedDropdown; // 비디오 인코딩 속도 선택 드롭다운
+        [SerializeField] private TMP_Dropdown codecDropdown;        // 비디오 코덱 선택 드롭다운
+        [SerializeField] private TMP_Dropdown speedDropdown;        // 비디오 인코딩 속도 선택 드롭다운
+        [SerializeField] private TMP_Dropdown pixelFormatDropdown;  // 비디오 픽셀 포맷 선택 드롭다운
 
         [Header("배경")]
-        [SerializeField] private Image ffmpegPathBackgroundImage; // FFMPEG 실행파일 경로 입력 필드의 배경 이미지
-        [SerializeField] private Image inputLocationBackgroundImage; // 입력 비디오 파일 경로 입력 필드의 배경 이미지
-        [SerializeField] private Image inputFileNameBackgroundImage; // 입력 비디오 파일 이름(형식) 입력 필드의 배경 이미지
-        [SerializeField] private Image outputLocationBackgroundImage; // 출력 비디오 파일 경로 입력 필드의 배경 이미지
+        [SerializeField] private Image ffmpegPathBackgroundImage;       // FFMPEG 실행파일 경로 입력 필드의 배경 이미지
+        [SerializeField] private Image inputLocationBackgroundImage;    // 입력 비디오 파일 경로 입력 필드의 배경 이미지
+        [SerializeField] private Image inputFileNameBackgroundImage;    // 입력 비디오 파일 이름(형식) 입력 필드의 배경 이미지
+        [SerializeField] private Image outputLocationBackgroundImage;   // 출력 비디오 파일 경로 입력 필드의 배경 이미지
 
-        [SerializeField] private Image widthBackgroundImage; // 비디오 너비 입력 필드의 배경 이미지
-        [SerializeField] private Image heightBackgroundImage; // 비디오 높이 입력 필드의 배경 이미지
-        [SerializeField] private Image framerateBackgroundImage; // 비디오 프레임 레이트 입력 필드의 배경 이미지
-        [SerializeField] private Image codecBackgroundImage; // 비디오 코덱 선택 필드의 배경 이미지
-        [SerializeField] private Image speedBackgroundImage; // 비디오 인코딩 속도 선택 필드의 배경 이미지
+        [SerializeField] private Image widthBackgroundImage;            // 비디오 너비 입력 필드의 배경 이미지
+        [SerializeField] private Image heightBackgroundImage;           // 비디오 높이 입력 필드의 배경 이미지
+        [SerializeField] private Image framerateBackgroundImage;        // 비디오 프레임 레이트 입력 필드의 배경 이미지
+        [SerializeField] private Image codecBackgroundImage;            // 비디오 코덱 선택 필드의 배경 이미지
+        [SerializeField] private Image speedBackgroundImage;            // 비디오 인코딩 속도 선택 필드의 배경 이미지
+        [SerializeField] private Image pixelFormatBackgroundImage;      // 비디오 픽셀 포맷 선택 필드의 배경 이미지
 
-        [SerializeField] private Image outputFileNameBackgroundImage; // 출력 비디오 파일 이름 입력 필드의 배경 이미지
+        [SerializeField] private Image outputFileNameBackgroundImage;   // 출력 비디오 파일 이름 입력 필드의 배경 이미지
 
         [Header("아이콘")]
-        [SerializeField] private Image ffmpegPathIcon; // FFMPEG 실행파일 경로 입력 필드의 아이콘
-        [SerializeField] private Image inputLocationIcon; // 입력 비디오 파일 경로 입력 필드의 아이콘
-        [SerializeField] private Image inputFileNameIcon; // 입력 비디오 파일 이름(형식) 입력 필드의 아이콘
-        [SerializeField] private Image outputLocationIcon; // 출력 비디오 파일 경로 입력 필드의 아이콘
+        [SerializeField] private Image ffmpegPathIcon;          // FFMPEG 실행파일 경로 입력 필드의 아이콘
+        [SerializeField] private Image inputLocationIcon;       // 입력 비디오 파일 경로 입력 필드의 아이콘
+        [SerializeField] private Image inputFileNameIcon;       // 입력 비디오 파일 이름(형식) 입력 필드의 아이콘
+        [SerializeField] private Image outputLocationIcon;      // 출력 비디오 파일 경로 입력 필드의 아이콘
 
         [Header("현 상태 추적 (ReadOnly)")]
-        [SerializeField] private bool isFFMPEGPathReady = false; // FFMPEG 경로가 설정되었는지 확인용
-        [SerializeField] private bool isInputPathReady = false; // 입력 소스 경로가 설정되었는지 확인용
-        [SerializeField] private bool isOutputPathReady = false; // 출력 경로가 설정되었는지 확인용
+        [SerializeField] private bool isFFMPEGPathReady = false;    // FFMPEG 경로가 설정되었는지 확인용
+        [SerializeField] private bool isInputPathReady = false;     // 입력 소스 경로가 설정되었는지 확인용
+        [SerializeField] private bool isOutputPathReady = false;    // 출력 경로가 설정되었는지 확인용
 
-        [SerializeField] private bool isInputFileNameReady = false; // 입력 비디오 파일 이름(형식)이 설정되었는지 확인용
-        [SerializeField] private bool isOutputFileNameReady = false; // 출력 비디오 파일 이름이 설정되었는지 확인용
+        [SerializeField] private bool isInputFileNameReady = false;     // 입력 비디오 파일 이름(형식)이 설정되었는지 확인용
+        [SerializeField] private bool isOutputFileNameReady = false;    // 출력 비디오 파일 이름이 설정되었는지 확인용
 
-        [SerializeField] private bool isWidthReady = false; // 비디오 너비가 설정되었는지 확인용
-        [SerializeField] private bool isHeightReady = false; // 비디오 높이가 설정되었는지 확인용
-        [SerializeField] private bool isFramerateReady = false; // 비디오 프레임 레이트가 설정되었는지 확인용
+        [SerializeField] private bool isWidthReady = false;         // 비디오 너비가 설정되었는지 확인용
+        [SerializeField] private bool isHeightReady = false;        // 비디오 높이가 설정되었는지 확인용
+        [SerializeField] private bool isFramerateReady = false;     // 비디오 프레임 레이트가 설정되었는지 확인용
 
-        [SerializeField] private bool isCodecReady = false; // 비디오 코덱이 설정되었는지 확인용
-        [SerializeField] private bool isSpeedReady = false; // 비디오 인코딩 속도가 설정되었는지 확인용
+        [SerializeField] private bool isCodecReady = false;         // 비디오 코덱이 설정되었는지 확인용
+        [SerializeField] private bool isSpeedReady = false;         // 비디오 인코딩 속도가 설정되었는지 확인용
+        [SerializeField] private bool isPixelFormatReady = false;   // 비디오 픽셀 포맷이 설정되었는지 확인용
+
+        [SerializeField] private bool isProcessing = false; // 현재 FFMPEG 작업이 진행 중인지 확인용
 
         [Header("유저 데이터")]
         [SerializeField] private UserSetting userSetting;
@@ -237,6 +243,15 @@ namespace Sunyunie.FFMPEGNyaa
                 speedBackgroundImage.color = errorColor;
             }
 
+            if (isPixelFormatReady)
+            {
+                pixelFormatBackgroundImage.color = normalColor;
+            }
+            else
+            {
+                pixelFormatBackgroundImage.color = errorColor;
+            }
+
             UpdatePreview();
         }
 
@@ -244,7 +259,7 @@ namespace Sunyunie.FFMPEGNyaa
         {
             if (!isFFMPEGPathReady || !isInputPathReady || !isOutputPathReady ||
                 !isInputFileNameReady || !isOutputFileNameReady || !isWidthReady ||
-                !isHeightReady || !isFramerateReady || !isCodecReady || !isSpeedReady)
+                !isHeightReady || !isFramerateReady || !isCodecReady || !isSpeedReady || !isPixelFormatReady)
             {
                 commandPreviewTest.text = "모든 필드를 올바르게 입력해야 한다냥~";
                 return;
@@ -274,11 +289,30 @@ namespace Sunyunie.FFMPEGNyaa
                 _ => "medium"
             };
 
+            string pixelFormat = userSetting.pixelFormat switch
+            {
+                FFMPEGPixelFormat.yuv420p => "yuv420p",
+                FFMPEGPixelFormat.yuv444p => "yuv444p",
+                FFMPEGPixelFormat.yuva420p => "yuva420p",
+                _ => "yuv420p"
+            };
+
             commandPreviewTest.text = $"\"{userSetting.ffmpegPath}\" -i \"{userSetting.inputLocation}/{userSetting.inputFileName}\" " +
                                       $"-vf \"scale={userSetting.width}:{userSetting.height}\" " +
                                       $"-r {userSetting.framerate} " +
                                       $"-c:v {codec} -preset {speed} " +
+                                      $"-pix_fmt {pixelFormat} " +
                                       $"\"{userSetting.outputLocation}/{userSetting.outputFileName}\"";
+
+            /*
+            commandPreviewTest.text = $"\"{userSetting.ffmpegPath}\" -i \"{userSetting.inputLocation}/{userSetting.inputFileName}\" " +
+                          $"-vf \"scale={userSetting.width}:{userSetting.height}:force_original_aspect_ratio=decrease,pad={userSetting.width}:{userSetting.height}:(ow-iw)/2:(oh-ih)/2\" " +
+                          $"-r {userSetting.framerate} " +
+                          $"-c:v {codec} -preset {speed} " +
+                          $"-pix_fmt {pixelFormat} " +
+                          $"\"{userSetting.outputLocation}/{userSetting.outputFileName}\"";
+            */
+
         }
 
         public void Button_FFMPEG_FindPath()
@@ -377,6 +411,8 @@ namespace Sunyunie.FFMPEGNyaa
             userSetting.codec = FFMPEGCodecs.H264; // 비디오 코덱
             userSetting.speed = FFMPEGSpeed.slow; // 비디오 인코딩 속도
 
+            userSetting.pixelFormat = FFMPEGPixelFormat.yuv420p; // 비디오 픽셀 포맷
+
             ffmpegPathText.text = userSetting.ffmpegPath;
             inputLocationText.text = userSetting.inputLocation;
             inputFileNameText.text = userSetting.inputFileName;
@@ -406,6 +442,13 @@ namespace Sunyunie.FFMPEGNyaa
                 FFMPEGSpeed.placebo => 10,
                 _ => 0
             };
+            pixelFormatDropdown.value = userSetting.pixelFormat switch
+            {
+                FFMPEGPixelFormat.yuv420p => 1,
+                FFMPEGPixelFormat.yuv444p => 2,
+                FFMPEGPixelFormat.yuva420p => 3,
+                _ => 0
+            };
 
             UpdateUI();
         }
@@ -414,41 +457,176 @@ namespace Sunyunie.FFMPEGNyaa
         {
             if (!isFFMPEGPathReady || !isInputPathReady || !isOutputPathReady ||
                 !isInputFileNameReady || !isOutputFileNameReady || !isWidthReady ||
-                !isHeightReady || !isFramerateReady || !isCodecReady || !isSpeedReady)
+                !isHeightReady || !isFramerateReady || !isCodecReady || !isSpeedReady || !isPixelFormatReady)
             {
                 UnityEngine.Debug.LogWarning("모든 필드를 올바르게 입력해야 한다냥~");
                 return;
             }
 
-            string ffmpegCommand = CleanTMPInput(commandPreviewTest.text);
+            isProcessing = true; // FFMPEG 작업 시작
 
-            if (string.IsNullOrEmpty(ffmpegCommand))
+            string codec = userSetting.codec.ToString().ToLower();
+
+            switch (codec)
             {
-                UnityEngine.Debug.LogWarning("FFMPEG 명령어가 비어있다냥~");
-                return;
+                case "h265":
+                case "hevc":
+                    codec = "libx265";
+                    break;
+                case "h264":
+                case "mp4":
+                    codec = "libx264";
+                    break;
+                case "webm":
+                    codec = "libvpx"; // 또는 libvpx-vp9
+                    break;
             }
 
-            // FFMPEG 명령어 실행
-            ProcessStartInfo psi = new ProcessStartInfo
+            System.Threading.Tasks.Task.Run(() =>
             {
-                FileName = "cmd.exe",
-                Arguments = "/C " + ffmpegCommand, // /C = 실행 후 창 닫기
+                ProcessStartInfo startInfo = new ProcessStartInfo
+                {
+                    FileName = userSetting.ffmpegPath,
+                    Arguments = $"-i \"{userSetting.inputLocation}/{userSetting.inputFileName}\" " +
+                                $"-vf \"scale={userSetting.width}:{userSetting.height}\" " +
+                                $"-r {userSetting.framerate} " +
+                                $"-c:v {codec.ToString().ToLower()} -preset {userSetting.speed.ToString().ToLower()} " +
+                                $"\"{userSetting.outputLocation}/{userSetting.outputFileName}\"",
+                    RedirectStandardOutput = false,
+                    RedirectStandardError = true, // 🔥 에러 로그 수집
+                    UseShellExecute = false,       // 🐾 리디렉션 위해 false로
+                    CreateNoWindow = true          // 🪟 콘솔창 감춤 (원하면 false)
+                };
+
+                using (Process process = new Process())
+                {
+                    process.StartInfo = startInfo;
+                    process.Start();
+
+                    UnityEngine.Debug.Log("FFMPEG 작업을 시작했다냥~");
+
+                    string errorLog = process.StandardError.ReadToEnd(); // 🔍 stderr 읽기
+
+                    process.WaitForExit();
+
+                    UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                    {
+                        if (process.ExitCode == 0)
+                        {
+                            UnityEngine.Debug.Log("FFMPEG 작업이 성공적으로 완료되었다냥~");
+                        }
+                        else
+                        {
+                            UnityEngine.Debug.LogError($"FFMPEG 종료 코드: {process.ExitCode}다냥~");
+                            UnityEngine.Debug.LogError($"FFMPEG 오류 로그다냥:\n{errorLog}");
+                        }
+
+                        isProcessing = false; // FFMPEG 작업 완료
+
+                    }, false);
+                }
+            });
+
+
+            /*
+            // FFMPEG 명령어 실행
+            ProcessStartInfo startInfo = new ProcessStartInfo
+            {
+                FileName = userSetting.ffmpegPath,
+                Arguments = $"-i \"{userSetting.inputLocation}/{userSetting.inputFileName}\" " +
+                            $"-vf \"scale={userSetting.width}:{userSetting.height}\" " +
+                            $"-r {userSetting.framerate} " +
+                            $"-c:v {userSetting.codec.ToString().ToLower()} -preset {userSetting.speed.ToString().ToLower()} " +
+                            $"\"{userSetting.outputLocation}/{userSetting.outputFileName}\"",
                 RedirectStandardOutput = true,
                 RedirectStandardError = true,
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
 
-            Process process = new Process();
-            process.StartInfo = psi;
+            using (Process process = new Process())
+            {
+                process.StartInfo = startInfo;
+                process.Start();
 
-            // 에러 로그 받아보기용
-            process.OutputDataReceived += (sender, args) => UnityEngine.Debug.Log("[FFmpeg] " + args.Data);
-            process.ErrorDataReceived += (sender, args) => UnityEngine.Debug.LogWarning("[FFmpeg-ERR] " + args.Data);
+                // 표준 출력과 오류 출력 읽기
+                string output = process.StandardOutput.ReadToEnd();
+                string error = process.StandardError.ReadToEnd();
 
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
+                process.WaitForExit();
+
+                if (process.ExitCode == 0)
+                {
+                    UnityEngine.Debug.Log("FFMPEG 작업이 성공적으로 완료되었다냥~");
+                    UnityEngine.Debug.Log(output);
+                }
+                else
+                {
+                    UnityEngine.Debug.LogError("FFMPEG 작업 중 오류가 발생했다냥~");
+                    UnityEngine.Debug.LogError(error);
+                }
+            }
+            */
+        }
+
+        public void Button_SaveSettings()
+        {
+            // 유저 설정 저장
+            UserSettingManager.Save(userSetting);
+            UnityEngine.Debug.Log("설정을 저장했다냥~");
+
+            // UI 업데이트
+            CheckAllErrors();
+        }
+
+        public void Button_LoadSettings()
+        {
+            // 유저 설정 불러오기
+            userSetting = UserSettingManager.Load();
+            UnityEngine.Debug.Log("설정을 불러왔다냥~");
+
+            // UI 업데이트
+            ffmpegPathText.text = userSetting.ffmpegPath;
+            inputLocationText.text = userSetting.inputLocation;
+            inputFileNameText.text = userSetting.inputFileName;
+            outputLocationText.text = userSetting.outputLocation;
+            outputFileNameText.text = userSetting.outputFileName;
+            widthText.text = userSetting.width;
+            heightText.text = userSetting.height;
+            framerateText.text = userSetting.framerate;
+
+            codecDropdown.value = userSetting.codec switch
+            {
+                FFMPEGCodecs.H264 => 1,
+                FFMPEGCodecs.H265 => 2,
+                FFMPEGCodecs.WebM => 3,
+                _ => 0
+            };
+
+            speedDropdown.value = userSetting.speed switch
+            {
+                FFMPEGSpeed.ultrafast => 1,
+                FFMPEGSpeed.superfast => 2,
+                FFMPEGSpeed.veryfast => 3,
+                FFMPEGSpeed.faster => 4,
+                FFMPEGSpeed.fast => 5,
+                FFMPEGSpeed.medium => 6,
+                FFMPEGSpeed.slow => 7,
+                FFMPEGSpeed.slower => 8,
+                FFMPEGSpeed.veryslow => 9,
+                FFMPEGSpeed.placebo => 10,
+                _ => 0
+            };
+
+            pixelFormatDropdown.value = userSetting.pixelFormat switch
+            {
+                FFMPEGPixelFormat.yuv420p => 1,
+                FFMPEGPixelFormat.yuv444p => 2,
+                FFMPEGPixelFormat.yuva420p => 3,
+                _ => 0
+            };
+
+            CheckAllErrors();
         }
 
         public void InputField_FFMPEG_Changed()
@@ -553,6 +731,29 @@ namespace Sunyunie.FFMPEGNyaa
             CheckAllErrors();
         }
 
+        public void Dropdown_PixelFormat_Changed()
+        {
+            if (pixelFormatDropdown.value == 0)
+            {
+                isPixelFormatReady = false;
+                UnityEngine.Debug.LogWarning("픽셀 포맷을 선택해야 한다냥~");
+                return;
+            }
+            else
+            {
+                isPixelFormatReady = true;
+
+                userSetting.pixelFormat = pixelFormatDropdown.value switch
+                {
+                    1 => FFMPEGPixelFormat.yuv420p,
+                    2 => FFMPEGPixelFormat.yuv444p,
+                    3 => FFMPEGPixelFormat.yuva420p,
+                };
+            }
+
+            CheckAllErrors();
+        }
+
         public void InputField_OutputFileName_Changed()
         {
             userSetting.outputFileName = outputFileNameText.text;
@@ -567,21 +768,21 @@ namespace Sunyunie.FFMPEGNyaa
     [System.Serializable]
     public struct UserSetting
     {
-        public string       ffmpegPath;     // FFMPEG의 실행 파일 경로
-        public string       inputLocation;  // 입력 비디오 파일의 경로
-        public string       outputLocation; // 출력 비디오 파일의 경로
+        public string ffmpegPath;               // FFMPEG의 실행 파일 경로
+        public string inputLocation;            // 입력 비디오 파일의 경로
+        public string outputLocation;           // 출력 비디오 파일의 경로
 
-        public string       inputFileName;  // 입력 비디오 파일의 이름 (형식)
-        public string       outputFileName; // 출력 비디오 파일의 이름
+        public string inputFileName;            // 입력 비디오 파일의 이름 (형식)
+        public string outputFileName;           // 출력 비디오 파일의 이름
 
-        public string       width;          // 비디오의 너비
-        public string       height;         // 비디오의 높이
+        public string width;                    // 비디오의 너비
+        public string height;                   // 비디오의 높이
 
-        public string       framerate;      // 비디오의 프레임 레이트
+        public string framerate;                // 비디오의 프레임 레이트
 
-        public FFMPEGCodecs codec;          // 비디오 코덱
-        public FFMPEGSpeed  speed;          // 비디오 인코딩 속도
-
+        public FFMPEGCodecs codec;              // 비디오 코덱
+        public FFMPEGSpeed speed;               // 비디오 인코딩 속도
+        public FFMPEGPixelFormat pixelFormat;   // 비디오 픽셀 포맷
     }
 
     /// <summary>
@@ -609,5 +810,15 @@ namespace Sunyunie.FFMPEGNyaa
         slower,
         veryslow,
         placebo
+    }
+
+    /// <summary>
+    /// 픽셀 포맷
+    /// </summary>
+    public enum FFMPEGPixelFormat
+    {
+        yuv420p,
+        yuv444p,
+        yuva420p
     }
 }
