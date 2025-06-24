@@ -1,5 +1,6 @@
 using SFB;
 using TMPro;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -86,7 +87,7 @@ namespace Sunyunie.FFMPEGNyaa
             // 빈 문자열인지 확인
             if (string.IsNullOrEmpty(_value))
             {
-                Debug.LogWarning("빈 문자열은 입력할 수 없다냥~");
+                UnityEngine.Debug.LogWarning("빈 문자열은 입력할 수 없다냥~");
                 return false;
             }
 
@@ -97,7 +98,7 @@ namespace Sunyunie.FFMPEGNyaa
                 {
                     if (!char.IsDigit(c))
                     {
-                        Debug.LogWarning("숫자만 입력되어야 한다냥~");
+                        UnityEngine.Debug.LogWarning("숫자만 입력되어야 한다냥~");
                         return false;
                     }
                 }
@@ -292,7 +293,7 @@ namespace Sunyunie.FFMPEGNyaa
             }
             else
             {
-                Debug.LogWarning("FFmpeg 실행파일을 찾지 못했다냥~");
+                UnityEngine.Debug.LogWarning("FFmpeg 실행파일을 찾지 못했다냥~");
             }
 
             CheckAllErrors();
@@ -310,7 +311,7 @@ namespace Sunyunie.FFMPEGNyaa
             }
             else
             {
-                Debug.LogWarning("입력 비디오 파일의 경로를 찾지 못했다냥~");
+                UnityEngine.Debug.LogWarning("입력 비디오 파일의 경로를 찾지 못했다냥~");
             }
 
             CheckAllErrors();
@@ -335,7 +336,7 @@ namespace Sunyunie.FFMPEGNyaa
             }
             else
             {
-                Debug.LogWarning("입력 비디오 파일의 이름(형식)을 찾지 못했다냥~");
+                UnityEngine.Debug.LogWarning("입력 비디오 파일의 이름(형식)을 찾지 못했다냥~");
             }
 
             CheckAllErrors();
@@ -353,7 +354,7 @@ namespace Sunyunie.FFMPEGNyaa
             }
             else
             {
-                Debug.LogWarning("출력 비디오 파일의 경로를 찾지 못했다냥~");
+                UnityEngine.Debug.LogWarning("출력 비디오 파일의 경로를 찾지 못했다냥~");
             }
 
             CheckAllErrors();
@@ -407,6 +408,47 @@ namespace Sunyunie.FFMPEGNyaa
             };
 
             UpdateUI();
+        }
+
+        public void Button_Process()
+        {
+            if (!isFFMPEGPathReady || !isInputPathReady || !isOutputPathReady ||
+                !isInputFileNameReady || !isOutputFileNameReady || !isWidthReady ||
+                !isHeightReady || !isFramerateReady || !isCodecReady || !isSpeedReady)
+            {
+                UnityEngine.Debug.LogWarning("모든 필드를 올바르게 입력해야 한다냥~");
+                return;
+            }
+
+            string ffmpegCommand = CleanTMPInput(commandPreviewTest.text);
+
+            if (string.IsNullOrEmpty(ffmpegCommand))
+            {
+                UnityEngine.Debug.LogWarning("FFMPEG 명령어가 비어있다냥~");
+                return;
+            }
+
+            // FFMPEG 명령어 실행
+            ProcessStartInfo psi = new ProcessStartInfo
+            {
+                FileName = "cmd.exe",
+                Arguments = "/C " + ffmpegCommand, // /C = 실행 후 창 닫기
+                RedirectStandardOutput = true,
+                RedirectStandardError = true,
+                UseShellExecute = false,
+                CreateNoWindow = true
+            };
+
+            Process process = new Process();
+            process.StartInfo = psi;
+
+            // 에러 로그 받아보기용
+            process.OutputDataReceived += (sender, args) => UnityEngine.Debug.Log("[FFmpeg] " + args.Data);
+            process.ErrorDataReceived += (sender, args) => UnityEngine.Debug.LogWarning("[FFmpeg-ERR] " + args.Data);
+
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
         }
 
         public void InputField_FFMPEG_Changed()
@@ -463,7 +505,7 @@ namespace Sunyunie.FFMPEGNyaa
             if (codecDropdown.value == 0)
             {
                 isCodecReady = false;
-                Debug.LogWarning("코덱을 선택해야 한다냥~");
+                UnityEngine.Debug.LogWarning("코덱을 선택해야 한다냥~");
                 return;
             }
             else
@@ -486,7 +528,7 @@ namespace Sunyunie.FFMPEGNyaa
             if (speedDropdown.value == 0)
             {
                 isSpeedReady = false;
-                Debug.LogWarning("속도를 선택해야 한다냥~");
+                UnityEngine.Debug.LogWarning("속도를 선택해야 한다냥~");
                 return;
             }
             else
