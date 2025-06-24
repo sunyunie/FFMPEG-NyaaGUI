@@ -1,7 +1,6 @@
 using SFB;
 using TMPro;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -38,6 +37,9 @@ namespace Sunyunie.FFMPEGNyaa
         [SerializeField] private TMP_Dropdown codecDropdown;        // 비디오 코덱 선택 드롭다운
         [SerializeField] private TMP_Dropdown speedDropdown;        // 비디오 인코딩 속도 선택 드롭다운
         [SerializeField] private TMP_Dropdown pixelFormatDropdown;  // 비디오 픽셀 포맷 선택 드롭다운
+
+        [Header("토글")]
+        [SerializeField] private Toggle openFolderWhenDoneToggle; // 작업 완료 후 출력 폴더를 열지 여부를 선택하는 토글
 
         [Header("배경")]
         [SerializeField] private Image ffmpegPathBackgroundImage;       // FFMPEG 실행파일 경로 입력 필드의 배경 이미지
@@ -104,8 +106,7 @@ namespace Sunyunie.FFMPEGNyaa
 
             if (isOpenFolderWhenDone)
             {
-                UnityEngine.Debug.Log("작업 완료 후 출력 폴더를 연다냥~");
-                System.Diagnostics.Process.Start("explorer.exe", userSetting.outputLocation);
+                Button_OpenOutputLocation(); // 작업 완료 후 출력 폴더 열기
             }
         }
 
@@ -534,21 +535,17 @@ namespace Sunyunie.FFMPEGNyaa
 
                     process.WaitForExit();
 
-                    UnityEngine.WSA.Application.InvokeOnAppThread(() =>
+                    if (process.ExitCode == 0)
                     {
-                        if (process.ExitCode == 0)
-                        {
-                            UnityEngine.Debug.Log("FFMPEG 작업이 성공적으로 완료되었다냥~");
-                        }
-                        else
-                        {
-                            UnityEngine.Debug.LogError($"FFMPEG 종료 코드: {process.ExitCode}다냥~");
-                            UnityEngine.Debug.LogError($"FFMPEG 오류 로그다냥:\n{errorLog}");
-                        }
+                        UnityEngine.Debug.Log("FFMPEG 작업이 성공적으로 완료되었다냥~");
+                    }
+                    else
+                    {
+                        UnityEngine.Debug.LogError($"FFMPEG 종료 코드: {process.ExitCode}다냥~");
+                        UnityEngine.Debug.LogError($"FFMPEG 오류 로그다냥:\n{errorLog}");
+                    }
 
-                        isProcessing = false; // FFMPEG 작업 완료
-
-                    }, false);
+                    isProcessing = false;
                 }
             });
 
@@ -800,8 +797,10 @@ namespace Sunyunie.FFMPEGNyaa
             CheckAllErrors();
         }
 
-        public void Toggle_OpenFolderWhenDone(bool _isOn)
+        public void Toggle_OpenFolderWhenDone()
         {
+            bool _isOn = openFolderWhenDoneToggle.isOn;
+
             isOpenFolderWhenDone                = _isOn;
             userSetting.isOpenFolderWhenDone    = _isOn;
         }
