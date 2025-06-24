@@ -5,6 +5,12 @@ This tool provides an easy-to-use interface for running FFMPEG commands,
 with support for setting presets, saving/loading configurations,  
 and choosing files/folders through a native dialog system.
 
+> **Important!**  
+> Before using this tool, please install a prebuilt FFMPEG binary  
+> from [https://github.com/btbn/ffmpeg-builds/releases](https://github.com/btbn/ffmpeg-builds/releases)  
+> and place it in a location of your choice.  
+> You will need to provide the path to `ffmpeg.exe` during setup.
+
 ---
 
 ## What's Used 🐾
