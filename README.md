@@ -7,7 +7,7 @@ and choosing files/folders through a native dialog system.
 
 ---
 
-## What's Inside 🐾
+## What's Used 🐾
 
 This project is powered by:
 
