@@ -12,6 +12,14 @@ and choosing files/folders through a native dialog system.
 > and place it in a location of your choice.  
 > You will need to provide the path to `ffmpeg.exe` during setup.
 
+## Features ✨
+
+🌐 **Multi-language Support:**  
+English, Korean, Japanese, Chinese, Russian, and Spanish — all covered nya! (=ↀωↀ=)✧
+
+🎬 **Auto Image Sequence Setup:**  
+Automatically detects your image sequences so you can focus on making cool videos! (ฅ^ω^ฅ)💖
+
 ---
 
 ## What's Used 🐾
