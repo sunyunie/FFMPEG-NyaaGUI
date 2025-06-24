@@ -1,9 +1,11 @@
 using SFB;
 using TMPro;
 using System.Diagnostics;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Text.RegularExpressions;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 namespace Sunyunie.FFMPEGNyaa
 {
@@ -12,6 +14,8 @@ namespace Sunyunie.FFMPEGNyaa
     /// </summary>
     public class FFMPEGNyaa : MonoBehaviour
     {
+        #region Serialized Fields
+
         [Header("색상")]
         [SerializeField] private Color errorColor = Color.red;      // 오류 발생 시 배경색
         [SerializeField] private Color normalColor = Color.green;   // 정상 상태일 때 배경색
@@ -38,6 +42,7 @@ namespace Sunyunie.FFMPEGNyaa
         [SerializeField] private TMP_Dropdown codecDropdown;        // 비디오 코덱 선택 드롭다운
         [SerializeField] private TMP_Dropdown speedDropdown;        // 비디오 인코딩 속도 선택 드롭다운
         [SerializeField] private TMP_Dropdown pixelFormatDropdown;  // 비디오 픽셀 포맷 선택 드롭다운
+        [SerializeField] private TMP_Dropdown localizationDropdown; // 로컬라이제이션 선택 드롭다운
 
         [Header("토글")]
         [SerializeField] private Toggle openFolderWhenDoneToggle; // 작업 완료 후 출력 폴더를 열지 여부를 선택하는 토글
@@ -87,6 +92,8 @@ namespace Sunyunie.FFMPEGNyaa
 
         [Header("유저 데이터")]
         [SerializeField] private UserSetting userSetting;
+
+        #endregion
 
         private void Start()
         {
@@ -286,7 +293,39 @@ namespace Sunyunie.FFMPEGNyaa
                 !isInputFileNameReady || !isOutputFileNameReady || !isWidthReady ||
                 !isHeightReady || !isFramerateReady || !isCodecReady || !isSpeedReady || !isPixelFormatReady)
             {
-                commandPreviewTest.text = "모든 필드를 올바르게 입력해야 한다냥~";
+                // 다국어 지원: 현재 로케일에 따라 안내 메시지 변경
+                var locale = LocalizationSettings.SelectedLocale?.Identifier.Code ?? "ko-KR";
+                switch (locale)
+                {
+                    case "en":
+                    case "en-US":
+                    case "en-GB":
+                        commandPreviewTest.text = "Pwease fill in aww the fiewds purrfectwy~ nya~!";
+                        break;
+                    case "ko":
+                    case "ko-KR":
+                        commandPreviewTest.text = "모든 필드를 올바르게 입력해야 한다냥~";
+                        break;
+                    case "ja":
+                    case "ja-JP":
+                        commandPreviewTest.text = "ぜ～んぶの項目、まちがえずに入力してほしいにゃんっ♡";
+                        break;
+                    case "zh":
+                    case "zh-CN":
+                        commandPreviewTest.text = "欄欄要乖乖填好才行喵～不然本喵要生气气了喵～！";
+                        break;
+                    case "ru":
+                    case "ru-RU":
+                        commandPreviewTest.text = "Пожалуйста, заполните все поля правильно~";
+                        break;
+                    case "es":
+                    case "es-ES":
+                        commandPreviewTest.text = "Porfi, llena todos los campitos bien bien, ¿sí? ¡Miau~!";
+                        break;
+                    default:
+                        commandPreviewTest.text = "모든 필드를 올바르게 입력해야 한다냥~";
+                        break;
+                }
                 return;
             }
 
@@ -338,6 +377,12 @@ namespace Sunyunie.FFMPEGNyaa
                           $"\"{userSetting.outputLocation}/{userSetting.outputFileName}\"";
             */
 
+        }
+
+        public void Button_GotoGitHub()
+        {
+            // GitHub 페이지로 이동
+            Application.OpenURL("https://github.com/sunyunie/FFMPEG-NyaaGUI");
         }
 
         public void Button_FFMPEG_FindPath()
@@ -813,6 +858,17 @@ namespace Sunyunie.FFMPEGNyaa
                 };
             }
 
+            CheckAllErrors();
+        }
+
+        public void Dropdown_Localization_Changed()
+        {
+            UnityEngine.Debug.Log($"로컬라이제이션이 {localizationDropdown.options[localizationDropdown.value].text}으로 변경되었다냥~");
+
+            // 로컬라이제이션 변경
+            LocalizationSettings.SelectedLocale = LocalizationSettings.AvailableLocales.Locales[localizationDropdown.value];
+
+            // 로컬라이제이션 변경 후 UI 업데이트
             CheckAllErrors();
         }
 

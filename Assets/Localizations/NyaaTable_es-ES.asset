@@ -1,0 +1,95 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: NyaaTable_es-ES
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: es-ES
+  m_SharedData: {fileID: 11400000, guid: 57560232a3530794085a5be0c2a87f3b, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 53706809344
+    m_Localized: "\xA1Ejecutar nya~! ( \u2022\u0300\u03C9\u2022\u0301 )"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 4906633977856
+    m_Localized: "\xA1Guardar nya~! "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5001941147648
+    m_Localized: "\xA1Cargar nya~! "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5048544059392
+    m_Localized: "\xA1Cargar preset de muestra nya~! "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5099668430848
+    m_Localized: "\xA1Ancho nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5141334646784
+    m_Localized: "\xA1Altura nya~! "
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5180916293632
+    m_Localized: "\xA1Lugar de exportaci\xF3n nya~! (\u0E05^\u2022\u03C9\u2022^\u0E05)"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5288449859584
+    m_Localized: "Im\xE1genes en fila nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5438790492160
+    m_Localized: "\xA1Camino de la imagen nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5582550261760
+    m_Localized: "\xA1Camino a FFMPEG nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5682718629888
+    m_Localized: "\xA1Buscar nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5859886030848
+    m_Localized: "\xA1Abrir carpeta nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 5915942903808
+    m_Localized: "\xA1Abrir carpeta cuando termine nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6444022554624
+    m_Localized: "\xA1Fotograma nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6627301056512
+    m_Localized: "\xA1Codificaci\xF3n nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6675049013248
+    m_Localized: "\xA1Velocidad de codificaci\xF3n nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6762332479488
+    m_Localized: "\xA1Formato de p\xEDxel nya~!"
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6968235057152
+    m_Localized: "\xA1Nombre de archivo nya~!"
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []
