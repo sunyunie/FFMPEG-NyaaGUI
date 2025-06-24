@@ -17,12 +17,12 @@ namespace Sunyunie.FFMPEGNyaa
         #region Serialized Fields
 
         [Header("색상")]
-        [SerializeField] private Color errorColor = Color.red;      // 오류 발생 시 배경색
-        [SerializeField] private Color normalColor = Color.green;   // 정상 상태일 때 배경색
+        [SerializeField] private Color errorColor = Color.red;          // 오류 발생 시 배경색
+        [SerializeField] private Color normalColor = Color.green;       // 정상 상태일 때 배경색
 
         [Header("이미지")]
-        [SerializeField] private Sprite badIcon;
-        [SerializeField] private Sprite goodIcon;
+        [SerializeField] private Sprite badIcon;                        // 오류 발생 시 아이콘
+        [SerializeField] private Sprite goodIcon;                       // 정상 상태일 때 아이콘
 
         [Header("인풋필드")]
         [SerializeField] private TMP_InputField ffmpegPathText;         // FFMPEG 실행파일 경로를 표시할 텍스트
@@ -30,22 +30,22 @@ namespace Sunyunie.FFMPEGNyaa
         [SerializeField] private TMP_InputField inputFileNameText;      // 입력 비디오 파일 이름(형식)을 표시할 텍스트
         [SerializeField] private TMP_InputField outputLocationText;     // 출력 비디오 파일 경로를 표시할 텍스트
 
-        [SerializeField] private TMP_InputField widthText;          // 비디오 너비를 표시할 텍스트
-        [SerializeField] private TMP_InputField heightText;         // 비디오 높이를
-        [SerializeField] private TMP_InputField framerateText;      // 비디오 프레임 레이트를 표시할 텍스트
+        [SerializeField] private TMP_InputField widthText;              // 비디오 너비를 표시할 텍스트
+        [SerializeField] private TMP_InputField heightText;             // 비디오 높이를
+        [SerializeField] private TMP_InputField framerateText;          // 비디오 프레임 레이트를 표시할 텍스트
 
-        [SerializeField] private TMP_InputField outputFileNameText; // 출력 비디오 파일 이름을 표시할 텍스트
+        [SerializeField] private TMP_InputField outputFileNameText;     // 출력 비디오 파일 이름을 표시할 텍스트
 
-        [SerializeField] private TMP_InputField commandPreviewTest; // FFMPEG 명령어 미리보기를 표시할 텍스트
+        [SerializeField] private TMP_InputField commandPreviewTest;     // FFMPEG 명령어 미리보기를 표시할 텍스트
 
         [Header("드롭다운")]
-        [SerializeField] private TMP_Dropdown codecDropdown;        // 비디오 코덱 선택 드롭다운
-        [SerializeField] private TMP_Dropdown speedDropdown;        // 비디오 인코딩 속도 선택 드롭다운
-        [SerializeField] private TMP_Dropdown pixelFormatDropdown;  // 비디오 픽셀 포맷 선택 드롭다운
-        [SerializeField] private TMP_Dropdown localizationDropdown; // 로컬라이제이션 선택 드롭다운
+        [SerializeField] private TMP_Dropdown codecDropdown;            // 비디오 코덱 선택 드롭다운
+        [SerializeField] private TMP_Dropdown speedDropdown;            // 비디오 인코딩 속도 선택 드롭다운
+        [SerializeField] private TMP_Dropdown pixelFormatDropdown;      // 비디오 픽셀 포맷 선택 드롭다운
+        [SerializeField] private TMP_Dropdown localizationDropdown;     // 로컬라이제이션 선택 드롭다운
 
         [Header("토글")]
-        [SerializeField] private Toggle openFolderWhenDoneToggle; // 작업 완료 후 출력 폴더를 열지 여부를 선택하는 토글
+        [SerializeField] private Toggle openFolderWhenDoneToggle;       // 작업 완료 후 출력 폴더를 열지 여부를 선택하는 토글
 
         [Header("배경")]
         [SerializeField] private Image ffmpegPathBackgroundImage;       // FFMPEG 실행파일 경로 입력 필드의 배경 이미지
@@ -63,40 +63,43 @@ namespace Sunyunie.FFMPEGNyaa
         [SerializeField] private Image outputFileNameBackgroundImage;   // 출력 비디오 파일 이름 입력 필드의 배경 이미지
 
         [Header("아이콘")]
-        [SerializeField] private Image ffmpegPathIcon;          // FFMPEG 실행파일 경로 입력 필드의 아이콘
-        [SerializeField] private Image inputLocationIcon;       // 입력 비디오 파일 경로 입력 필드의 아이콘
-        [SerializeField] private Image inputFileNameIcon;       // 입력 비디오 파일 이름(형식) 입력 필드의 아이콘
-        [SerializeField] private Image outputLocationIcon;      // 출력 비디오 파일 경로 입력 필드의 아이콘
+        [SerializeField] private Image ffmpegPathIcon;                  // FFMPEG 실행파일 경로 입력 필드의 아이콘
+        [SerializeField] private Image inputLocationIcon;               // 입력 비디오 파일 경로 입력 필드의 아이콘
+        [SerializeField] private Image inputFileNameIcon;               // 입력 비디오 파일 이름(형식) 입력 필드의 아이콘
+        [SerializeField] private Image outputLocationIcon;              // 출력 비디오 파일 경로 입력 필드의 아이콘
 
         [Header("앞배경 오브젝트")]
-        [SerializeField] private GameObject forgroundObject; // UI 앞배경 오브젝트
+        [SerializeField] private GameObject forgroundObject;            // UI 앞배경 오브젝트
 
         [Header("현 상태 추적 (ReadOnly)")]
-        [SerializeField] private bool isFFMPEGPathReady = false;    // FFMPEG 경로가 설정되었는지 확인용
-        [SerializeField] private bool isInputPathReady = false;     // 입력 소스 경로가 설정되었는지 확인용
-        [SerializeField] private bool isOutputPathReady = false;    // 출력 경로가 설정되었는지 확인용
+        [SerializeField] private bool isFFMPEGPathReady = false;        // FFMPEG 경로가 설정되었는지 확인용
+        [SerializeField] private bool isInputPathReady = false;         // 입력 소스 경로가 설정되었는지 확인용
+        [SerializeField] private bool isOutputPathReady = false;        // 출력 경로가 설정되었는지 확인용
 
         [SerializeField] private bool isInputFileNameReady = false;     // 입력 비디오 파일 이름(형식)이 설정되었는지 확인용
         [SerializeField] private bool isOutputFileNameReady = false;    // 출력 비디오 파일 이름이 설정되었는지 확인용
 
-        [SerializeField] private bool isWidthReady = false;         // 비디오 너비가 설정되었는지 확인용
-        [SerializeField] private bool isHeightReady = false;        // 비디오 높이가 설정되었는지 확인용
-        [SerializeField] private bool isFramerateReady = false;     // 비디오 프레임 레이트가 설정되었는지 확인용
+        [SerializeField] private bool isWidthReady = false;             // 비디오 너비가 설정되었는지 확인용
+        [SerializeField] private bool isHeightReady = false;            // 비디오 높이가 설정되었는지 확인용
+        [SerializeField] private bool isFramerateReady = false;         // 비디오 프레임 레이트가 설정되었는지 확인용
 
-        [SerializeField] private bool isCodecReady = false;         // 비디오 코덱이 설정되었는지 확인용
-        [SerializeField] private bool isSpeedReady = false;         // 비디오 인코딩 속도가 설정되었는지 확인용
-        [SerializeField] private bool isPixelFormatReady = false;   // 비디오 픽셀 포맷이 설정되었는지 확인용
+        [SerializeField] private bool isCodecReady = false;             // 비디오 코덱이 설정되었는지 확인용
+        [SerializeField] private bool isSpeedReady = false;             // 비디오 인코딩 속도가 설정되었는지 확인용
+        [SerializeField] private bool isPixelFormatReady = false;       // 비디오 픽셀 포맷이 설정되었는지 확인용
 
-        [SerializeField] private bool isProcessing = false; // 현재 FFMPEG 작업이 진행 중인지 확인용
-        [SerializeField] private bool isOpenFolderWhenDone = false; // 작업 완료 후 출력 폴더를 열지 여부
+        [SerializeField] private bool isProcessing = false;             // 현재 FFMPEG 작업이 진행 중인지 확인용
+        [SerializeField] private bool isOpenFolderWhenDone = false;     // 작업 완료 후 출력 폴더를 열지 여부
 
         [Header("유저 데이터")]
         [SerializeField] private UserSetting userSetting;
 
         #endregion
 
+        #region Unity
+
         private void Start()
         {
+            ChangeLocalizationOnStart();
             CheckAllErrors();
         }
 
@@ -105,6 +108,52 @@ namespace Sunyunie.FFMPEGNyaa
             if (!isProcessing && forgroundObject.activeSelf) // FFMPEG 작업이 진행 중이지 않고 UI 앞배경이 활성화되어 있다면
             {
                 OnProcessEnded(); // 작업 완료 후 처리
+            }
+        }
+
+        #endregion
+
+        private void ChangeLocalizationOnStart()
+        {
+            // 현재 컴퓨터 로케일에 따라 로컬라이제이션 변경
+            var locale = LocalizationSettings.SelectedLocale?.Identifier.Code ?? "ko-KR";
+            switch (locale)
+            {
+                case "en":
+                case "en-US":
+                case "en-GB":
+                    localizationDropdown.value = 0; // 영어
+                    localizationDropdown.value = 0; // 영어
+                    break;
+                case "ko":
+                case "ko-KR":
+                    localizationDropdown.value = 1; // 한국어
+                    localizationDropdown.value = 1; // 한국어
+                    break;
+                case "ja":
+                case "ja-JP":
+                    localizationDropdown.value = 2; // 일본어
+                    localizationDropdown.value = 2; // 일본어
+                    break;
+                case "zh":
+                case "zh-CN":
+                    localizationDropdown.value = 3; // 중국어
+                    localizationDropdown.value = 3; // 중국어
+                    break;
+                case "ru":
+                case "ru-RU":
+                    localizationDropdown.value = 4; // 러시아어
+                    localizationDropdown.value = 4; // 러시아어
+                    break;
+                case "es":
+                case "es-ES":
+                    localizationDropdown.value = 5; // 스페인어
+                    localizationDropdown.value = 5; // 스페인어
+                    break;
+                default:
+                    localizationDropdown.value = 0; // 기본값: 영어
+                    UnityEngine.Debug.LogWarning($"지원하지 않는 로케일 '{locale}'이다냥~ 기본값인 영어로 설정한다냥~");
+                    break;
             }
         }
 
