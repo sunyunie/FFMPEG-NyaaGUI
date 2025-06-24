@@ -1,4 +1,4 @@
-# FFMPEGNYAAUI
+# FFMPEG-NyaaGUI
 Simple FFMPEG UI Project
 
 ⚠️ **This project is currently under development and is not functional yet.**
