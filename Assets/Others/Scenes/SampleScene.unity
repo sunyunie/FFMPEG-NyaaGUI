@@ -513,7 +513,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 67008867}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 178401031}
+        m_TargetAssemblyTypeName: Sunyunie.FFMPEGNyaa.FFMPEGNyaa, Assembly-CSharp
+        m_MethodName: Button_InputFileName_FindPath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &67008867
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1078,7 +1090,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 170327409}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 178401031}
+        m_TargetAssemblyTypeName: Sunyunie.FFMPEGNyaa.FFMPEGNyaa, Assembly-CSharp
+        m_MethodName: Button_OutputLocation_FindPath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &170327409
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1241,16 +1265,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15d5f2d5dcd32f6409afffb54c62ca8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  errorColor: {r: 1, g: 0, b: 0, a: 1}
-  normalColor: {r: 0, g: 1, b: 0, a: 1}
-  ffmpegPathText: {fileID: 1582207106}
-  inputLocationText: {fileID: 1738770945}
-  inputFileNameText: {fileID: 1675143754}
-  outputLocationText: {fileID: 1255249712}
-  widthText: {fileID: 88065430}
-  heightText: {fileID: 28600575}
-  framerateText: {fileID: 397101444}
-  outputFileNameText: {fileID: 0}
+  errorColor: {r: 1, g: 0.6, b: 0.25882354, a: 1}
+  normalColor: {r: 0.09019608, g: 0.81960785, b: 0.47058824, a: 1}
+  badIcon: {fileID: 21300000, guid: aa2ff30b2f68efd4db848ddca5ea6a58, type: 3}
+  goodIcon: {fileID: 21300000, guid: 7b886aa5ee728ec4589289eccc7addb2, type: 3}
+  ffmpegPathText: {fileID: 1018895800}
+  inputLocationText: {fileID: 1520021126}
+  inputFileNameText: {fileID: 2143681327}
+  outputLocationText: {fileID: 1290138670}
+  widthText: {fileID: 827912120}
+  heightText: {fileID: 2029788470}
+  framerateText: {fileID: 597049232}
+  outputFileNameText: {fileID: 1656478701}
   ffmpegPathBackgroundImage: {fileID: 239570595}
   inputLocationBackgroundImage: {fileID: 1340573733}
   inputFileNameBackgroundImage: {fileID: 947767074}
@@ -1261,6 +1287,20 @@ MonoBehaviour:
   codecBackgroundImage: {fileID: 1491626232}
   speedBackgroundImage: {fileID: 341357676}
   outputFileNameBackgroundImage: {fileID: 453801586}
+  ffmpegPathIcon: {fileID: 138389410}
+  inputLocationIcon: {fileID: 2011910773}
+  inputFileNameIcon: {fileID: 457257372}
+  outputLocationIcon: {fileID: 539707262}
+  isFFMPEGPathReady: 0
+  isInputPathReady: 0
+  isOutputPathReady: 0
+  isInputFileNameReady: 0
+  isOutputFileNameReady: 0
+  isWidthReady: 0
+  isHeightReady: 0
+  isFramerateReady: 0
+  isCodecReady: 0
+  isSpeedReady: 0
   userSetting:
     ffmpegPath: 
     inputLocation: 
@@ -2952,6 +2992,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 178401031}
+        m_TargetAssemblyTypeName: Sunyunie.FFMPEGNyaa.FFMPEGNyaa, Assembly-CSharp
+        m_MethodName: Button_InputLocation_FindPath
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 178401031}
         m_TargetAssemblyTypeName: Sunyunie.FFMPEGNyaa.FFMPEGNyaa, Assembly-CSharp
         m_MethodName: Button_InputLocation_FindPath
