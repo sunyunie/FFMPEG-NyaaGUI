@@ -434,6 +434,12 @@ namespace Sunyunie.FFMPEGNyaa
             Application.OpenURL("https://github.com/sunyunie/FFMPEG-NyaaGUI");
         }
 
+        public void Button_GotoItch()
+        {
+            // Itch.io 페이지로 이동
+            Application.OpenURL("https://sunyunie.itch.io/ffmpeg-nyaagui");
+        }
+
         public void Button_FFMPEG_FindPath()
         {
             var paths = StandaloneFileBrowser.OpenFilePanel("FFmpeg 실행파일을 골라줘냥~", "", "exe", false);
