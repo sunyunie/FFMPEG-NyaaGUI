@@ -76,6 +76,9 @@ This project is powered by:
 - **FFMPEG**  
   For actual video encoding and processing (user must provide the executable)
 
+- **[DOTween](https://github.com/Demigiant/dotween)**  
+   For smooth and efficient tweening animations within the Unity UI
+
 ---
 
 ## Fonts
