@@ -1,6 +1,9 @@
 ![Nyaa](images/nyaa002.png)
-# FFMPEG-NyaaGUI😽
+
+# FFMPEG-NyaaGUI😽  
 A Simple & Cute FFMPEG UI Project made with Unity! (=ↀωↀ=)✧
+
+You can check it out on [itch.io](https://sunyunie.itch.io/ffmpeg-nyaagui)! 🐾
 
 This tool provides an easy-to-use interface for running FFMPEG commands,  
 with support for setting presets, saving/loading configurations,  
